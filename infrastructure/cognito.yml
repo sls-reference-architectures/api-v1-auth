@@ -1,0 +1,24 @@
+Resources:
+  ApiV1AuthUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: ApiV1Auth-${self:provider.stage}
+
+  ApiV1AuthUserPoolDomainName:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: sls-ra-api-v1-auth-${self:provider.stage}
+      UserPoolId: !Ref ApiV1AuthUserPool
+
+  ApiV1AuthUserPoolResourceServer:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties:
+      UserPoolId: !Ref ApiV1AuthUserPool
+      Identifier: client-credentials-flow-demo
+      Name: Api V1 Auth Resource Server
+      
+
+Outputs:
+  ApiV1AuthUserPoolId:
+    Description: The Cognito user pool for API access
+    Value: !Ref ApiV1AuthUserPool

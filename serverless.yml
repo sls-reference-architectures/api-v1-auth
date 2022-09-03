@@ -36,4 +36,5 @@ functions:
           path: hello
           method: get
 
-# resources: # TODO
+resources:
+  - ${file(infrastructure/cognito.yml)}
