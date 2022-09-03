@@ -29,7 +29,7 @@ Resources:
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
-      AllowedOauthScopes:
+      AllowedOAuthScopes:
         - client-credentials-flow-demo/hello.read
         - client-credentials-flow-demo/hello.write
       ClientName: ApiV1AuthIntegrationTestClient
