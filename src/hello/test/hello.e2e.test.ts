@@ -8,7 +8,7 @@ describe('When getting a hello', () => {
       const options: AxiosRequestConfig = {
         baseURL: process.env.API_URL,
         headers: {
-          Authorization: 'Bearer abc', // TODO: populate with valid token
+          Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
         },
         validateStatus: () => true,
       };
