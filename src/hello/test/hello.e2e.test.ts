@@ -12,10 +12,10 @@ describe('When getting a hello', () => {
         },
         validateStatus: () => true,
       };
-  
+
       // ACT
       const { status, data } = await axios.get(path, options);
-  
+
       // ASSERT
       expect(status).toEqual(200);
       expect(data.message).toMatch(/hello world/i);
@@ -30,10 +30,10 @@ describe('When getting a hello', () => {
         baseURL: process.env.API_URL,
         validateStatus: () => true,
       };
-  
+
       // ACT
-      const { status, data } = await axios.get(path, options);
-  
+      const { status } = await axios.get(path, options);
+
       // ASSERT
       expect(status).toEqual(401);
     });
