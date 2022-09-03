@@ -45,7 +45,6 @@ const getTestClientSecret = async (stack: Stack) => {
       ClientId: getTestClientId(stack),
     }),
   );
-  console.log(UserPoolClient);
 
   return UserPoolClient?.ClientSecret ?? '';
 };
@@ -74,7 +73,7 @@ const getTestToken = async (stack: Stack): Promise<AccessToken> => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    baseURL: userPoolDomain,
+    baseURL: `https://${userPoolDomain}.auth.${region}.amazoncognito.com`,
   };
   const {
     data: { access_token: accessToken, expires_in: expiresIn, token_type: tokenType },
