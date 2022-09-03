@@ -17,6 +17,19 @@ Resources:
       Identifier: client-credentials-flow-demo
       Name: Api V1 Auth Resource Server
       
+  ApiV1AuthIntegrationTestClient:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn: ApiV1AuthUserPoolResourceServer
+    Properties:
+      AllowedOAuthFlowUserPoolClient: true
+      AllowedOAuthFlows:
+        - client_credentials
+      ExplicitAuthFlows:
+        - ALLOW_CUSTOM_AUTH
+      ClientName: ApiV1AuthIntegrationTestClient
+      GenerateSecret: true
+      PreventUserExistenceErrors: ENABLED
+      UserPoolId: !Ref ApiV1AuthUserPool
 
 Outputs:
   ApiV1AuthUserPoolId:
