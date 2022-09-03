@@ -54,7 +54,7 @@
     "typescript": "^4.8.2"
   },
   "lint-staged": {
-    "*.{js,ts}": "eslint . --ext .ts --cache --fix",
+    "*.{js,ts}": "eslint --cache --fix",
     "*.{js,md,ts}": "prettier --write --ignore-path .gitignore"
   },
   "dependencies": {
