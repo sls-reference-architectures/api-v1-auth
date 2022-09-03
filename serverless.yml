@@ -35,6 +35,9 @@ functions:
       - http:
           path: hello
           method: get
+          authorizer: authorizerFunc
+  authorizerFunc:
+    handler: src/authorizer/handler.default
 
 resources:
   - ${file(infrastructure/cognito.yml)}
