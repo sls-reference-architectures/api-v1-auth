@@ -21,7 +21,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: ApiV1AuthUserPoolResourceServer
     Properties:
-      AllowedOAuthFlowUserPoolClient: true
+      AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
       ExplicitAuthFlows:
