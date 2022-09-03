@@ -38,6 +38,8 @@ functions:
           authorizer: authorizerFunc
   authorizerFunc:
     handler: src/authorizer/handler.default
+    environment:
+      USER_POOL_ID: !Ref ApiV1AuthUserPool
 
 resources:
   - ${file(infrastructure/cognito.yml)}
