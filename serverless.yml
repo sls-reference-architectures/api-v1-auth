@@ -1,0 +1,39 @@
+service: api-v1-auth
+
+provider:
+  deploymentBucket:
+    name: com.reference-architecture.deploys
+    maxPreviousDeploymentArtifacts: 5
+    serverSideEncryption: AES256
+  name: aws
+  region: ${opt:region, 'us-east-1'}
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'devtest'}
+  tags:
+    lumigo:auto-trace: true
+
+custom:
+  logRetentionInDays: 7
+  prune:
+    automatic: true
+    number: 1
+
+package:
+  individually: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-deployment-bucket
+  - serverless-iam-roles-per-function
+  - serverless-plugin-log-retention
+  - serverless-prune-plugin
+
+functions:
+  helloWorld:
+    handler: src/hello/handler.default
+    events:
+      - http:
+          path: hello
+          method: get
+
+# resources: # TODO
