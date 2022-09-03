@@ -2,7 +2,7 @@
 import { CloudFormationClient, DescribeStacksCommand, Stack } from '@aws-sdk/client-cloudformation';
 
 const region = process.env.AWS_REGION || 'us-east-1';
-const stage = process.env.STAGE || 'devtest';
+const stage = process.env.STAGE || 'dev';
 
 const setup = async (): Promise<void> => {
   const stackName = `api-v1-auth-${stage}`;
