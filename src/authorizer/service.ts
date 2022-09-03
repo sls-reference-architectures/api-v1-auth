@@ -25,7 +25,9 @@ const getPolicy = async (input: { methodArn: string; authorizationToken: string 
 };
 
 const getClientId = (authToken: string): string => {
-  const decoded: any = jwt.decode(authToken, { complete: true });
+  const minusTheBear = authToken.split('Bearer ')[1];
+  console.log(minusTheBear);
+  const decoded: any = jwt.decode(minusTheBear, { complete: true });
   if (!decoded) {
     throw new Error('Cannot parse authToken');
   }
