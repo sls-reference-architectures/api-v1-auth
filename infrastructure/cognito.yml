@@ -24,8 +24,6 @@ Resources:
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
-      ExplicitAuthFlows:
-        - ALLOW_CUSTOM_AUTH
       ClientName: ApiV1AuthIntegrationTestClient
       GenerateSecret: true
       PreventUserExistenceErrors: ENABLED
