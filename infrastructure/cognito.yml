@@ -41,3 +41,6 @@ Outputs:
   ApiV1AuthUserPoolId:
     Description: The Cognito user pool for API access
     Value: !Ref ApiV1AuthUserPool
+  ApiV1AuthTestClientId:
+    Description: The ClientId for the Integration Test Client
+    Value: !Ref ApiV1AuthIntegrationTestClient
