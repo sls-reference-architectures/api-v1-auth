@@ -16,6 +16,11 @@ Resources:
       UserPoolId: !Ref ApiV1AuthUserPool
       Identifier: client-credentials-flow-demo
       Name: Api V1 Auth Resource Server
+      Scopes:
+        - ScopeName: hello.read
+          ScopeDescription: Allows user read-only access to the hello resource
+        - ScopeName: hello.write
+          ScopeDescription: Allows user full write access to the hello resource
       
   ApiV1AuthIntegrationTestClient:
     Type: AWS::Cognito::UserPoolClient
@@ -24,6 +29,9 @@ Resources:
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
+      AllowedOauthScopes:
+        - client-credentials-flow-demo/hello.read
+        - client-credentials-flow-demo/hello.write
       ClientName: ApiV1AuthIntegrationTestClient
       GenerateSecret: true
       PreventUserExistenceErrors: ENABLED
