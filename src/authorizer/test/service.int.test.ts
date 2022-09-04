@@ -4,7 +4,7 @@ describe('When invoking service.getPolicy', () => {
   describe('with a valid bearer token', () => {
     it('should return a valid policy', async () => {
       // ARRANGE
-      const authHeaderValue = `Bearer ${process.env.ACCESS_TOKEN}`;
+      const authHeaderValue = `Bearer ${process.env.FULL_ACCESS_TOKEN}`;
       const input = { methodArn: 'x', authHeaderValue };
 
       // ACT
@@ -37,7 +37,7 @@ describe('When invoking service.getPolicy', () => {
   describe('with token without Bearer scheme', () => {
     it('should throw "Unauthorized"', async () => {
       // ARRANGE
-      const noTokenInput = { methodArn: 'x', authHeaderValue: process.env.ACCESS_TOKEN ?? '' };
+      const noTokenInput = { methodArn: 'x', authHeaderValue: process.env.FULL_ACCESS_TOKEN ?? '' };
 
       // ACT
       const getPolicyAction = () => getPolicy(noTokenInput);
@@ -61,7 +61,7 @@ describe('When invoking service.getPolicy', () => {
   });
 
   describe('with signed but expired bearer token', () => {
-    it.skip('should throw "Unauthorized"', async () => {
+    it('should throw "Unauthorized"', async () => {
       // ARRANGE
       const noTokenInput = { methodArn: 'x', authHeaderValue: `Bearer ${expiredToken}` };
 
