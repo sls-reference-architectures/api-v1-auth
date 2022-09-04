@@ -29,7 +29,7 @@ plugins:
   - serverless-prune-plugin
 
 functions:
-  helloWorld:
+  helloReadWorld:
     handler: src/hello/handlers.getMessageHandler
     events:
       - http:
@@ -39,7 +39,7 @@ functions:
             name: authorizerFunc
             scopes:
               - client-credentials-flow-demo/hello.read
-  helloWrite:
+  helloWriteWorld:
     handler: src/hello/handlers.createMessageHandler
     events:
       - http:
