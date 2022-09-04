@@ -30,7 +30,7 @@ plugins:
 
 functions:
   helloWorld:
-    handler: src/hello/handler.default
+    handler: src/hello/handlers.getMessageHandler
     events:
       - http:
           path: hello
@@ -39,6 +39,17 @@ functions:
             name: authorizerFunc
             scopes:
               - client-credentials-flow-demo/hello.read
+  helloWrite:
+    handler: src/hello/handlers.createMessageHandler
+    events:
+      - http:
+          path: hello
+          method: post
+          authorizer: 
+            name: authorizerFunc
+            scopes:
+              - client-credentials-flow-demo/hello.read
+              - client-credentials-flow-demo/hello.write
   authorizerFunc:
     handler: src/authorizer/handler.default
     environment:
