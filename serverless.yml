@@ -35,7 +35,10 @@ functions:
       - http:
           path: hello
           method: get
-          authorizer: authorizerFunc
+          authorizer: 
+            name: authorizerFunc
+            scopes:
+              - client-credentials-flow-demo/hello.read
   authorizerFunc:
     handler: src/authorizer/handler.default
     environment:
