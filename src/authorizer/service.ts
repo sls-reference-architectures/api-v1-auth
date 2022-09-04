@@ -3,36 +3,45 @@ import { PolicyDocument } from 'aws-lambda';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import jwt from 'jsonwebtoken';
 
-const getPolicy = async (input: { methodArn: string; authorizationToken: string }) => {
+const getPolicy = async (input: { methodArn: string; authHeaderValue: string }) => {
   Logger.debug('In service.authorize()', { input }); // TODO: stop logging input --SRO
-  const { methodArn, authorizationToken } = input;
-  const clientId = getClientId(authorizationToken);
-  const verifier = CognitoJwtVerifier.create({
-    userPoolId: process.env.USER_POOL_ID ?? '',
-    clientId,
-    tokenUse: 'access',
-  });
+  const { methodArn, authHeaderValue } = input;
   try {
-    const payload = await verifier.verify(authorizationToken);
+    const authToken = getTokenFromAuthHeaderValue(authHeaderValue);
+    const clientId = getClientId(authToken);
+    const verifier = CognitoJwtVerifier.create({
+      userPoolId: process.env.USER_POOL_ID ?? '',
+      clientId,
+      tokenUse: 'access',
+    });
+    const payload = await verifier.verify(authToken);
     Logger.debug('Temporary trace: authorized', { payload });
 
     return generatePolicy({ effect: 'Allow', resource: methodArn });
   } catch (err) {
-    Logger.debug('Temporary trace: unauthorized');
+    const error = err as Error;
+    Logger.debug('Temporary trace: unauthorized', { errMsg: error.message });
 
     throw Error('Unauthorized'); // This becomes 401/Unauthorized in API Gateway
   }
 };
 
 const getClientId = (authToken: string): string => {
-  const minusTheBear = authToken.split('Bearer ')[1];
-  console.log(minusTheBear);
-  const decoded: any = jwt.decode(minusTheBear, { complete: true });
+  const decoded: any = jwt.decode(authToken, { complete: true });
   if (!decoded) {
     throw new Error('Cannot parse authToken');
   }
 
   return decoded.payload.client_id;
+};
+
+const getTokenFromAuthHeaderValue = (authHeaderValue: string): string => {
+  // if (!authHeaderValue.startsWith('Bearer ')) {
+  //   throw new Error('Auth Header value must start with "Bearer "');
+  // }
+  const minusTheBear = authHeaderValue.split('Bearer ')[1];
+
+  return minusTheBear;
 };
 
 const generatePolicy = (input: { effect: string; resource: string }): PolicyDocument => {
