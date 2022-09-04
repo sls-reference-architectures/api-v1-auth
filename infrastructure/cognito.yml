@@ -26,6 +26,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: ApiV1AuthUserPoolResourceServer
     Properties:
+      AccessTokenValidity: 1 # Duration in hours
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
@@ -41,6 +42,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: ApiV1AuthUserPoolResourceServer
     Properties:
+      AccessTokenValidity: 4 # Duration in hours
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - client_credentials
