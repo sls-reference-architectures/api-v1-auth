@@ -38,21 +38,6 @@ Resources:
       PreventUserExistenceErrors: ENABLED
       UserPoolId: !Ref ApiV1AuthUserPool
       
-  ApiV1AuthReadOnlyIntegrationTestClient:
-    Type: AWS::Cognito::UserPoolClient
-    DependsOn: ApiV1AuthUserPoolResourceServer
-    Properties:
-      AccessTokenValidity: 4 # Duration in hours
-      AllowedOAuthFlowsUserPoolClient: true
-      AllowedOAuthFlows:
-        - client_credentials
-      AllowedOAuthScopes:
-        - client-credentials-flow-demo/hello.read
-      ClientName: ApiV1AuthReadOnlyIntegrationTestClient
-      GenerateSecret: true
-      PreventUserExistenceErrors: ENABLED
-      UserPoolId: !Ref ApiV1AuthUserPool
-
 Outputs:
   ApiV1AuthUserPoolId:
     Description: The Cognito user pool for API access
@@ -63,6 +48,3 @@ Outputs:
   ApiV1AuthTestClientId:
     Description: The ClientId for the Integration Test Client
     Value: !Ref ApiV1AuthIntegrationTestClient
-  ApiV1AuthReadOnlyTestClientId:
-    Description: The ClientId for the Integration Test Client
-    Value: !Ref ApiV1AuthReadOnlyIntegrationTestClient

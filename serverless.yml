@@ -35,20 +35,7 @@ functions:
       - http:
           path: hello
           method: get
-          authorizer: 
-            name: authorizerFunc
-            scopes:
-              - client-credentials-flow-demo/hello.read
-  helloWriteWorld:
-    handler: src/hello/handlers.createMessageHandler
-    events:
-      - http:
-          path: hello
-          method: post
-          authorizer: 
-            name: authorizerFunc
-            scopes:
-              - client-credentials-flow-demo/hello.write
+          authorizer: authorizerFunc
   authorizerFunc:
     handler: src/authorizer/handler.default
     environment:

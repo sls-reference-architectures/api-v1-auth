@@ -17,31 +17,17 @@ export const getRestServiceEndpoint = (stack: Stack) =>
 export const getUserPoolId = (stack: Stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolId')?.OutputValue;
 
-const getFullAccessTestClientId = (stack: Stack) =>
+const getTestClientId = (stack: Stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthTestClientId')?.OutputValue ?? '';
-
-const getReadOnlyTestClientId = (stack: Stack) =>
-  stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthReadOnlyTestClientId')?.OutputValue ?? '';
 
 const getUserPoolDomain = (stack: Stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolDomain')?.OutputValue ?? '';
 
-const getFullAccessTestClientSecret = async (stack: Stack) => {
+const getTestClientSecret = async (stack: Stack) => {
   const { UserPoolClient }: DescribeUserPoolClientResponse = await cognitoClient.send(
     new DescribeUserPoolClientCommand({
       UserPoolId: getUserPoolId(stack),
-      ClientId: getFullAccessTestClientId(stack),
-    }),
-  );
-
-  return UserPoolClient?.ClientSecret ?? '';
-};
-
-const getReadOnlyTestClientSecret = async (stack: Stack) => {
-  const { UserPoolClient }: DescribeUserPoolClientResponse = await cognitoClient.send(
-    new DescribeUserPoolClientCommand({
-      UserPoolId: getUserPoolId(stack),
-      ClientId: getReadOnlyTestClientId(stack),
+      ClientId: getTestClientId(stack),
     }),
   );
 
@@ -59,50 +45,10 @@ export const getStack = async (stackName: string): Promise<Stack> => {
   return stack;
 };
 
-export const getFullAccessTestToken = async (stack: Stack): Promise<AccessToken> => {
-  const clientId = getFullAccessTestClientId(stack);
-  const clientSecret = await getFullAccessTestClientSecret(stack);
+export const getTestToken = async (stack: Stack): Promise<AccessToken> => {
+  const clientId = getTestClientId(stack);
+  const clientSecret = await getTestClientSecret(stack);
   const userPoolDomain = getUserPoolDomain(stack);
-  // const body = { grant_type: 'client_credentials' };
-  // const options: AxiosRequestConfig = {
-  //   auth: {
-  //     username: testClientId,
-  //     password: testClientSecret,
-  //   },
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   baseURL: `https://${userPoolDomain}.auth.${region}.amazoncognito.com`,
-  // };
-  // const {
-  //   data: { access_token: accessToken, expires_in: expiresIn, token_type: tokenType },
-  // } = await axios.post('/oauth2/token', qs.stringify(body), options);
-
-  // return { accessToken, expiresIn, tokenType };
-
-  return getToken({ clientId, clientSecret, userPoolDomain });
-};
-
-export const getReadOnlyTestToken = async (stack: Stack): Promise<AccessToken> => {
-  const clientId = getReadOnlyTestClientId(stack);
-  const clientSecret = await getReadOnlyTestClientSecret(stack);
-  const userPoolDomain = getUserPoolDomain(stack);
-  // const body = { grant_type: 'client_credentials' };
-  // const options: AxiosRequestConfig = {
-  //   auth: {
-  //     username: testClientId,
-  //     password: testClientSecret,
-  //   },
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   baseURL: `https://${userPoolDomain}.auth.${region}.amazoncognito.com`,
-  // };
-  // const {
-  //   data: { access_token: accessToken, expires_in: expiresIn, token_type: tokenType },
-  // } = await axios.post('/oauth2/token', qs.stringify(body), options);
-
-  // return { accessToken, expiresIn, tokenType };
 
   return getToken({ clientId, clientSecret, userPoolDomain });
 };

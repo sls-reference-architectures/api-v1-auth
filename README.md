@@ -12,5 +12,4 @@ Validates that the caller has a valid (existent, properly-signed, properly-scope
 2. Caller has no token (FAILURE)
 3. Caller does use "Bearer" scheme (FAILURE)
 4. Caller has a non-signed token (FAILURE)
-5. Caller has an signed token with missing scope (FAILURE)
-6. Caller has a signed-but-expired token (FAILURE)
+5. Caller has a signed-but-expired token (FAILURE)
