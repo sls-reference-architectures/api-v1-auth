@@ -1,6 +1,17 @@
 service: api-v1-auth
 
 provider:
+  apiGateway:
+    apiKeys:
+      - wat
+    usagePlan:
+      quota:
+        limit: 5000
+        offset: 2
+        period: month
+      throttle:
+        burstLimit: 200
+        rateLimit: 100
   deploymentBucket:
     name: com.reference-architecture.deploys
     maxPreviousDeploymentArtifacts: 5
