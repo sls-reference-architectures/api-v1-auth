@@ -29,7 +29,7 @@ plugins:
   - serverless-prune-plugin
 
 functions:
-  helloReadWorld:
+  helloWorld:
     handler: src/hello/handlers.getMessageHandler
     events:
       - http:
