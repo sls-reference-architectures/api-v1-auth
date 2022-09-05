@@ -48,7 +48,6 @@ functions:
           authorizer: 
             name: authorizerFunc
             scopes:
-              - client-credentials-flow-demo/hello.read
               - client-credentials-flow-demo/hello.write
   authorizerFunc:
     handler: src/authorizer/handler.default

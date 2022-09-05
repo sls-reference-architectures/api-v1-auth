@@ -36,9 +36,6 @@ const getClientId = (authToken: string): string => {
 };
 
 const getTokenFromAuthHeaderValue = (authHeaderValue: string): string => {
-  // if (!authHeaderValue.startsWith('Bearer ')) {
-  //   throw new Error('Auth Header value must start with "Bearer "');
-  // }
   const minusTheBear = authHeaderValue.split('Bearer ')[1];
 
   return minusTheBear;
