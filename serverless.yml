@@ -3,9 +3,7 @@ service: api-v1-auth
 provider:
   apiGateway:
     apiKeys:
-      - name: wat
-        customerId: seriously
-      - foo
+      - IntegrationTestClient
     usagePlan:
       quota:
         limit: 5000
