@@ -4,11 +4,12 @@ provider:
   apiGateway:
     apiKeys:
       - wat
+      # - !Ref ApiV1AuthIntegrationTestClient
     usagePlan:
       quota:
         limit: 5000
         offset: 2
-        period: month
+        period: MONTH
       throttle:
         burstLimit: 200
         rateLimit: 100
