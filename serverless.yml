@@ -4,7 +4,7 @@ provider:
   apiGateway:
     apiKeys:
       - wat
-      # - !Ref ApiV1AuthIntegrationTestClient
+      - !Ref ApiV1AuthIntegrationTestClient
     usagePlan:
       quota:
         limit: 5000

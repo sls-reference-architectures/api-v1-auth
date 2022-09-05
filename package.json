@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf .build && npx tsc --noEmit",
-    "deploy": "npx sls deploy",
+    "deploy": "npx sls deploy --conceal",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint '**/*.{ts,tsx}' --fix",
     "prepare": "husky install",
