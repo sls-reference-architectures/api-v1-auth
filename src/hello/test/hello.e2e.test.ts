@@ -13,7 +13,6 @@ describe('When getting a hello', () => {
         },
         validateStatus: () => true,
       };
-      console.log(process.env.API_KEY);
 
       // ACT
       const { status, data } = await axios.get(path, options);
@@ -41,6 +40,26 @@ describe('When getting a hello', () => {
 
       // ASSERT
       expect(status).toEqual(401);
+    });
+  });
+
+  describe('without an api key', () => {
+    it('should return 403', async () => {
+      // ARRANGE
+      const path = 'hello';
+      const options: AxiosRequestConfig = {
+        baseURL: process.env.API_URL,
+        headers: {
+          Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+        },
+        validateStatus: () => true,
+      };
+
+      // ACT
+      const { status } = await axios.get(path, options);
+
+      // ASSERT
+      expect(status).toEqual(403);
     });
   });
 });
