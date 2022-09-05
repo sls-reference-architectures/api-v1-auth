@@ -3,7 +3,8 @@ service: api-v1-auth
 provider:
   apiGateway:
     apiKeys:
-      - wat
+      - name: wat
+        customerId: seriously
       - foo
     usagePlan:
       quota:
