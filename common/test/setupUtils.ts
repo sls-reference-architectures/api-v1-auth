@@ -5,11 +5,17 @@ import {
   DescribeUserPoolClientCommand,
   DescribeUserPoolClientResponse,
 } from '@aws-sdk/client-cognito-identity-provider';
+import {
+  APIGatewayClient,
+  GetApiKeysCommand,
+  GetApiKeysCommandInput,
+} from '@aws-sdk/client-api-gateway';
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
 const region = process.env.AWS_REGION || 'us-east-1';
 const cognitoClient = new CognitoIdentityProviderClient({ region });
+const apiGatewayClient = new APIGatewayClient({ region });
 
 export const getRestServiceEndpoint = (stack: Stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ServiceEndpoint')?.OutputValue;
@@ -22,6 +28,16 @@ const getTestClientId = (stack: Stack) =>
 
 const getUserPoolDomain = (stack: Stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolDomain')?.OutputValue ?? '';
+
+export const getApiKey = async (name: string) => {
+  const input: GetApiKeysCommandInput = {
+    nameQuery: name,
+    includeValues: true,
+  };
+  const { items } = await apiGatewayClient.send(new GetApiKeysCommand(input));
+
+  return items?.[0];
+};
 
 const getTestClientSecret = async (stack: Stack) => {
   const { UserPoolClient }: DescribeUserPoolClientResponse = await cognitoClient.send(

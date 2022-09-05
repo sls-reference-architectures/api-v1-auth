@@ -1,6 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { getStack, getRestServiceEndpoint, getUserPoolId, getTestToken } from './setupUtils';
+import {
+  getStack,
+  getRestServiceEndpoint,
+  getUserPoolId,
+  getTestToken,
+  getApiKey,
+} from './setupUtils';
 
 const region = process.env.AWS_REGION || 'us-east-1';
 const stage = process.env.STAGE || 'dev';
@@ -12,6 +18,7 @@ const setup = async (): Promise<void> => {
   const serviceUrl = getRestServiceEndpoint(stack);
   const userPoolId = getUserPoolId(stack);
   const { accessToken: fullAccessToken } = await getTestToken(stack);
+  const testApiKey = await getApiKey('IntegrationTestClient');
 
   process.env.AWS_REGION = region;
   process.env.STAGE = stage;
@@ -19,6 +26,7 @@ const setup = async (): Promise<void> => {
   process.env.API_URL = serviceUrl;
   process.env.USER_POOL_ID = userPoolId;
   process.env.ACCESS_TOKEN = fullAccessToken;
+  process.env.API_KEY = testApiKey?.value;
 };
 
 export default setup;

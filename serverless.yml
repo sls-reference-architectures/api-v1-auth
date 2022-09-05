@@ -46,6 +46,7 @@ functions:
       - http:
           path: hello
           method: get
+          private: true
           authorizer: authorizerFunc
   authorizerFunc:
     handler: src/authorizer/handler.default

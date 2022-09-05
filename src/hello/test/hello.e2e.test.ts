@@ -9,9 +9,11 @@ describe('When getting a hello', () => {
         baseURL: process.env.API_URL,
         headers: {
           Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+          'x-api-key': process.env.API_KEY ?? '',
         },
         validateStatus: () => true,
       };
+      console.log(process.env.API_KEY);
 
       // ACT
       const { status, data } = await axios.get(path, options);
@@ -28,6 +30,9 @@ describe('When getting a hello', () => {
       const path = 'hello';
       const options: AxiosRequestConfig = {
         baseURL: process.env.API_URL,
+        headers: {
+          'x-api-key': process.env.API_KEY ?? '',
+        },
         validateStatus: () => true,
       };
 
