@@ -18,7 +18,7 @@ provider:
     serverSideEncryption: AES256
   name: aws
   region: ${opt:region, 'us-east-1'}
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   stage: ${opt:stage, 'dev'}
   tags:
     lumigo:auto-trace: true
