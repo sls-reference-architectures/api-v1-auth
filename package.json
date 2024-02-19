@@ -70,7 +70,7 @@
     "@dazn/lambda-powertools-logger": "^1.28.1",
     "@middy/core": "^4.6.5",
     "@middy/http-json-body-parser": "^4.6.5",
-    "aws-jwt-verify": "^4.0.0",
+    "aws-jwt-verify": "^4.0.1",
     "jsonwebtoken": "^9.0.2"
   }
 }
