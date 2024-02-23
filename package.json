@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/sls-reference-architectures/api-v1-auth#readme",
   "devDependencies": {
-    "@aws-sdk/client-api-gateway": "^3.511.0",
-    "@aws-sdk/client-cloudformation": "^3.511.0",
+    "@aws-sdk/client-api-gateway": "^3.515.0",
+    "@aws-sdk/client-cloudformation": "^3.515.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.515.0",
     "@swc/core": "^1.4.2",
     "@swc/jest": "^0.2.36",
@@ -54,9 +54,9 @@
     "lint-staged": "^15.2.1",
     "prettier": "^3.0.3",
     "qs": "^6.11.2",
-    "serverless": "^3.35.2",
+    "serverless": "^3.38.0",
     "serverless-deployment-bucket": "^1.6.0",
-    "serverless-esbuild": "^1.48.5",
+    "serverless-esbuild": "^1.51.0",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-plugin-log-retention": "^2.0.0",
     "serverless-prune-plugin": "^2.0.2",
@@ -68,8 +68,8 @@
   },
   "dependencies": {
     "@dazn/lambda-powertools-logger": "^1.28.1",
-    "@middy/core": "^4.6.5",
-    "@middy/http-json-body-parser": "^4.6.5",
+    "@middy/core": "^4.7.0",
+    "@middy/http-json-body-parser": "^4.7.0",
     "aws-jwt-verify": "^4.0.1",
     "jsonwebtoken": "^9.0.2"
   }
