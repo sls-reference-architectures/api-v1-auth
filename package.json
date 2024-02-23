@@ -28,7 +28,7 @@
   "devDependencies": {
     "@aws-sdk/client-api-gateway": "^3.511.0",
     "@aws-sdk/client-cloudformation": "^3.511.0",
-    "@aws-sdk/client-cognito-identity-provider": "^3.502.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.515.0",
     "@swc/core": "^1.4.0",
     "@swc/jest": "^0.2.29",
     "@tsconfig/node16": "1.0.3",
