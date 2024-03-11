@@ -29,7 +29,7 @@
     "@aws-sdk/client-api-gateway": "^3.527.0",
     "@aws-sdk/client-cloudformation": "^3.526.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.525.0",
-    "@swc/core": "^1.4.5",
+    "@swc/core": "^1.4.6",
     "@swc/jest": "^0.2.36",
     "@tsconfig/node16": "1.0.3",
     "@tsconfig/node18": "^18.2.2",
