@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sls-reference-architectures/api-v1-auth#readme",
   "devDependencies": {
     "@aws-sdk/client-api-gateway": "^3.590.0",
-    "@aws-sdk/client-cloudformation": "^3.616.0",
+    "@aws-sdk/client-cloudformation": "^3.675.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.556.0",
     "@swc/core": "^1.5.24",
     "@swc/jest": "^0.2.36",
@@ -43,7 +43,7 @@
     "jest-extended": "^4.0.2",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.3",
-    "qs": "^6.12.1",
+    "qs": "^6.13.0",
     "serverless": "^3.39.0",
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-esbuild": "^1.52.1",
