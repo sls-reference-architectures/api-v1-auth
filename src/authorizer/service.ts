@@ -41,7 +41,7 @@ const getTokenFromAuthHeaderValue = (authHeaderValue: string): string => {
   return minusTheBear;
 };
 
-const generatePolicy = (input: { effect: string; resource: string }): PolicyDocument => {
+const generatePolicy = (input: { effect: any; resource: string }): PolicyDocument => {
   const { effect, resource } = input;
   const policyDocument: PolicyDocument = {
     Version: '2012-10-17',
