@@ -1,22 +1,19 @@
 module.exports = {
   env: {
     jest: true,
-    node: true,
+    es2022: true,
   },
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
-  parser: '@typescript-eslint/parser',
+  extends: ['airbnb-base', 'prettier'],
   parserOptions: {
-    project: './tsconfig.json',
+    ecmaVersion: 'latest',
   },
   plugins: ['no-only-tests'],
   root: true,
   rules: {
     'import/extensions': 0,
+    'import/prefer-default-export': 0,
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['off'],
     'no-only-tests/no-only-tests': 'error',
-  },
-  settings: {
-    'import/resolver': 'node',
+    'no-console': 1,
   },
 };

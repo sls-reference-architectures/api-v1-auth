@@ -12,7 +12,7 @@ describe('When invoking service.getPolicy', () => {
         Version,
         Statement: [statement],
       } = await getPolicy(input);
-      const policyStatement: any = statement;
+      const policyStatement = statement;
 
       // ASSERT
       expect(Version).toBeString();

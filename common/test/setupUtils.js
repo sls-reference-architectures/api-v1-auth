@@ -1,36 +1,31 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { CloudFormationClient, DescribeStacksCommand, Stack } from '@aws-sdk/client-cloudformation';
+import { CloudFormationClient, DescribeStacksCommand } from '@aws-sdk/client-cloudformation';
 import {
   CognitoIdentityProviderClient,
   DescribeUserPoolClientCommand,
-  DescribeUserPoolClientResponse,
 } from '@aws-sdk/client-cognito-identity-provider';
-import {
-  APIGatewayClient,
-  GetApiKeysCommand,
-  GetApiKeysCommandInput,
-} from '@aws-sdk/client-api-gateway';
-import axios, { AxiosRequestConfig } from 'axios';
+import { APIGatewayClient, GetApiKeysCommand } from '@aws-sdk/client-api-gateway';
+import axios from 'axios';
 import qs from 'qs';
 
 const region = process.env.AWS_REGION || 'us-east-1';
 const cognitoClient = new CognitoIdentityProviderClient({ region });
 const apiGatewayClient = new APIGatewayClient({ region });
 
-export const getRestServiceEndpoint = (stack: Stack) =>
+export const getRestServiceEndpoint = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ServiceEndpoint')?.OutputValue;
 
-export const getUserPoolId = (stack: Stack) =>
+export const getUserPoolId = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolId')?.OutputValue;
 
-const getTestClientId = (stack: Stack) =>
+const getTestClientId = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthTestClientId')?.OutputValue ?? '';
 
-const getUserPoolDomain = (stack: Stack) =>
+const getUserPoolDomain = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolDomain')?.OutputValue ?? '';
 
-export const getApiKey = async (name: string) => {
-  const input: GetApiKeysCommandInput = {
+export const getApiKey = async (name) => {
+  const input = {
     nameQuery: name,
     includeValues: true,
   };
@@ -39,8 +34,8 @@ export const getApiKey = async (name: string) => {
   return items?.[0];
 };
 
-const getTestClientSecret = async (stack: Stack) => {
-  const { UserPoolClient }: DescribeUserPoolClientResponse = await cognitoClient.send(
+const getTestClientSecret = async (stack) => {
+  const { UserPoolClient } = await cognitoClient.send(
     new DescribeUserPoolClientCommand({
       UserPoolId: getUserPoolId(stack),
       ClientId: getTestClientId(stack),
@@ -50,7 +45,7 @@ const getTestClientSecret = async (stack: Stack) => {
   return UserPoolClient?.ClientSecret ?? '';
 };
 
-export const getStack = async (stackName: string): Promise<Stack> => {
+export const getStack = async (stackName) => {
   const cfn = new CloudFormationClient({ region });
   const stackResult = await cfn.send(new DescribeStacksCommand({ StackName: stackName }));
   const stack = stackResult.Stacks?.[0];
@@ -61,7 +56,7 @@ export const getStack = async (stackName: string): Promise<Stack> => {
   return stack;
 };
 
-export const getTestToken = async (stack: Stack): Promise<AccessToken> => {
+export const getTestToken = async (stack) => {
   const clientId = getTestClientId(stack);
   const clientSecret = await getTestClientSecret(stack);
   const userPoolDomain = getUserPoolDomain(stack);
@@ -69,14 +64,9 @@ export const getTestToken = async (stack: Stack): Promise<AccessToken> => {
   return getToken({ clientId, clientSecret, userPoolDomain });
 };
 
-const getToken = async (input: {
-  clientId: string;
-  clientSecret: string;
-  userPoolDomain: string;
-}) => {
-  const { clientId, clientSecret, userPoolDomain } = input;
+const getToken = async ({ clientId, clientSecret, userPoolDomain }) => {
   const body = { grant_type: 'client_credentials' };
-  const options: AxiosRequestConfig = {
+  const options = {
     auth: {
       username: clientId,
       password: clientSecret,
@@ -92,9 +82,3 @@ const getToken = async (input: {
 
   return { accessToken, expiresIn, tokenType };
 };
-
-interface AccessToken {
-  accessToken: string;
-  expiresIn: number;
-  tokenType: string;
-}

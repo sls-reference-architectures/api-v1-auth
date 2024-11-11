@@ -11,7 +11,7 @@ import {
 const region = process.env.AWS_REGION || 'us-east-1';
 const stage = process.env.STAGE || 'dev';
 
-const setup = async (): Promise<void> => {
+const setup = async () => {
   const stackName = `api-v1-auth-${stage}`;
 
   const stack = await getStack(stackName);

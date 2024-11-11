@@ -1,11 +1,9 @@
 import Logger from '@dazn/lambda-powertools-logger';
-import { PolicyDocument } from 'aws-lambda';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import jwt from 'jsonwebtoken';
 
-const getPolicy = async (input: { methodArn: string; authHeaderValue: string }) => {
-  Logger.debug('In service.authorize()', { input }); // TODO: stop logging input --SRO
-  const { methodArn, authHeaderValue } = input;
+const getPolicy = async ({ methodArn, authHeaderValue }) => {
+  Logger.debug('In service.authorize()', { methodArn, authHeaderValue }); // TODO: stop logging input --SRO
   try {
     const authToken = getTokenFromAuthHeaderValue(authHeaderValue);
     const clientId = getClientId(authToken);
@@ -19,15 +17,14 @@ const getPolicy = async (input: { methodArn: string; authHeaderValue: string }) 
 
     return generatePolicy({ effect: 'Allow', resource: methodArn });
   } catch (err) {
-    const error = err as Error;
-    Logger.debug('Temporary trace: unauthorized', { errMsg: error.message });
+    Logger.debug('Temporary trace: unauthorized', { errMsg: err.message });
 
     throw Error('Unauthorized'); // This becomes 401/Unauthorized in API Gateway
   }
 };
 
-const getClientId = (authToken: string): string => {
-  const decoded: any = jwt.decode(authToken, { complete: true });
+const getClientId = (authToken) => {
+  const decoded = jwt.decode(authToken, { complete: true });
   if (!decoded) {
     throw new Error('Cannot parse authToken');
   }
@@ -35,15 +32,14 @@ const getClientId = (authToken: string): string => {
   return decoded.payload.client_id;
 };
 
-const getTokenFromAuthHeaderValue = (authHeaderValue: string): string => {
+const getTokenFromAuthHeaderValue = (authHeaderValue) => {
   const minusTheBear = authHeaderValue.split('Bearer ')[1];
 
   return minusTheBear;
 };
 
-const generatePolicy = (input: { effect: any; resource: string }): PolicyDocument => {
-  const { effect, resource } = input;
-  const policyDocument: PolicyDocument = {
+const generatePolicy = ({ effect, resource }) => {
+  const policyDocument = {
     Version: '2012-10-17',
     Statement: [],
   };

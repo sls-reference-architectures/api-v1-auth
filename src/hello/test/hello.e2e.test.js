@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 describe('When getting a hello', () => {
   describe('with an access token', () => {
     it('should return 200', async () => {
       // ARRANGE
       const path = 'hello';
-      const options: AxiosRequestConfig = {
+      const options = {
         baseURL: process.env.API_URL,
         headers: {
           Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
@@ -27,7 +27,7 @@ describe('When getting a hello', () => {
     it('should return 401', async () => {
       // ARRANGE
       const path = 'hello';
-      const options: AxiosRequestConfig = {
+      const options = {
         baseURL: process.env.API_URL,
         headers: {
           'x-api-key': process.env.API_KEY ?? '',
@@ -47,7 +47,7 @@ describe('When getting a hello', () => {
     it('should return 403', async () => {
       // ARRANGE
       const path = 'hello';
-      const options: AxiosRequestConfig = {
+      const options = {
         baseURL: process.env.API_URL,
         headers: {
           Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
