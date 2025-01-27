@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sls-reference-architectures/api-v1-auth#readme",
   "devDependencies": {
     "@aws-sdk/client-api-gateway": "^3.590.0",
-    "@aws-sdk/client-cloudformation": "^3.675.0",
+    "@aws-sdk/client-cloudformation": "^3.734.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.696.0",
     "@swc/core": "^1.9.2",
     "@swc/jest": "^0.2.36",
