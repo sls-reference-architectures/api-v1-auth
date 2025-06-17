@@ -14,7 +14,7 @@ describe('When getting a hello', () => {
         },
         validateStatus: () => true,
       };
-      console.log(options);
+      console.log(process.env);
 
       await retry(
         async () => {
