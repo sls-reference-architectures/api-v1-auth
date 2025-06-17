@@ -98,6 +98,9 @@ const getToken = async ({ clientId, clientSecret, userPoolDomain }) => {
   const {
     data: { access_token: accessToken, expires_in: expiresIn, token_type: tokenType },
   } = await axios.post('/oauth2/token', qs.stringify(body), options);
+  if (!accessToken || !expiresIn || !tokenType) {
+    throw new Error('Failed to retrieve access token');
+  }
 
   return { accessToken, expiresIn, tokenType };
 };
