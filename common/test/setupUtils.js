@@ -26,20 +26,24 @@ const getUserPoolDomain = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolDomain')?.OutputValue ?? '';
 
 export const getApiKey = async (name) => {
-  const apiKey = await retry(
+  const result = await retry(
     async () => {
       const input = {
         nameQuery: name,
         includeValues: true,
       };
       const { items } = await apiGatewayClient.send(new GetApiKeysCommand(input));
+      const apiKey = items?.[0];
+      if (!apiKey) {
+        throw new Error(`API key with name "${name}" not found`);
+      }
 
-      return items?.[0];
+      return apiKey;
     },
     { retries: 3 },
   );
 
-  return apiKey;
+  return result;
 };
 
 const getTestClientSecret = async (stack) => {
