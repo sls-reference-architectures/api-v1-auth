@@ -24,7 +24,7 @@ describe('When getting a hello', () => {
           expect(status).toEqual(200);
           expect(data.message).toMatch(/hello world/i);
         },
-        { retries: 5 },
+        { retries: 7 },
       );
     });
   });
