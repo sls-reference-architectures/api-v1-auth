@@ -59,8 +59,8 @@
   },
   "dependencies": {
     "@dazn/lambda-powertools-logger": "^1.28.1",
-    "@middy/core": "^4.7.0",
-    "@middy/http-json-body-parser": "^4.7.0",
+    "@middy/core": "^6.3.2",
+    "@middy/http-json-body-parser": "^6.3.2",
     "aws-jwt-verify": "^5.1.0",
     "jsonwebtoken": "^9.0.2"
   }
