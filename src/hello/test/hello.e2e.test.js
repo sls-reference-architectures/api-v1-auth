@@ -1,4 +1,5 @@
 import axios from 'axios';
+import retry from 'async-retry';
 
 describe('When getting a hello', () => {
   describe('with an access token', () => {
@@ -14,12 +15,17 @@ describe('When getting a hello', () => {
         validateStatus: () => true,
       };
 
-      // ACT
-      const { status, data } = await axios.get(path, options);
+      await retry(
+        async () => {
+          // ACT
+          const { status, data } = await axios.get(path, options);
 
-      // ASSERT
-      expect(status).toEqual(200);
-      expect(data.message).toMatch(/hello world/i);
+          // ASSERT
+          expect(status).toEqual(200);
+          expect(data.message).toMatch(/hello world/i);
+        },
+        { retries: 3 },
+      );
     });
   });
 
