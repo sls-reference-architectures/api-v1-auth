@@ -13,7 +13,6 @@ const stage = process.env.STAGE || 'dev';
 
 const setup = async () => {
   const stackName = `api-v1-auth-${stage}`;
-
   const stack = await getStack(stackName);
   const serviceUrl = getRestServiceEndpoint(stack);
   const userPoolId = getUserPoolId(stack);

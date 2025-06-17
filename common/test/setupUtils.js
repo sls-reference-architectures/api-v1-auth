@@ -7,6 +7,7 @@ import {
 import { APIGatewayClient, GetApiKeysCommand } from '@aws-sdk/client-api-gateway';
 import axios from 'axios';
 import qs from 'qs';
+import retry from 'async-retry';
 
 const region = process.env.AWS_REGION || 'us-east-1';
 const cognitoClient = new CognitoIdentityProviderClient({ region });
@@ -25,13 +26,20 @@ const getUserPoolDomain = (stack) =>
   stack.Outputs?.find((o) => o.OutputKey === 'ApiV1AuthUserPoolDomain')?.OutputValue ?? '';
 
 export const getApiKey = async (name) => {
-  const input = {
-    nameQuery: name,
-    includeValues: true,
-  };
-  const { items } = await apiGatewayClient.send(new GetApiKeysCommand(input));
+  const apiKey = await retry(
+    async () => {
+      const input = {
+        nameQuery: name,
+        includeValues: true,
+      };
+      const { items } = await apiGatewayClient.send(new GetApiKeysCommand(input));
 
-  return items?.[0];
+      return items?.[0];
+    },
+    { retries: 3 },
+  );
+
+  return apiKey;
 };
 
 const getTestClientSecret = async (stack) => {
@@ -57,11 +65,18 @@ export const getStack = async (stackName) => {
 };
 
 export const getTestToken = async (stack) => {
-  const clientId = getTestClientId(stack);
-  const clientSecret = await getTestClientSecret(stack);
-  const userPoolDomain = getUserPoolDomain(stack);
+  const token = await retry(
+    async () => {
+      const clientId = getTestClientId(stack);
+      const clientSecret = await getTestClientSecret(stack);
+      const userPoolDomain = getUserPoolDomain(stack);
 
-  return getToken({ clientId, clientSecret, userPoolDomain });
+      return getToken({ clientId, clientSecret, userPoolDomain });
+    },
+    { retries: 3 },
+  );
+
+  return token;
 };
 
 const getToken = async ({ clientId, clientSecret, userPoolDomain }) => {
