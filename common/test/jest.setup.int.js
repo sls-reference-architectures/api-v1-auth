@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { getStack, getTestToken, getUserPoolId } from './setupUtils';
 
 const region = process.env.AWS_REGION || 'us-east-1';

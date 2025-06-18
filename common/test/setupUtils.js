@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { CloudFormationClient, DescribeStacksCommand } from '@aws-sdk/client-cloudformation';
 import {
   CognitoIdentityProviderClient,
