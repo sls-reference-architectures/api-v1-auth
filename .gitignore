@@ -105,4 +105,4 @@ dist
 .tern-port
 
 # VS Code
-.vscode/settings.json
+.vscode/
