@@ -63,6 +63,7 @@
     "@aws-lambda-powertools/logger": "^2.31.0",
     "@middy/core": "^7.1.4",
     "@middy/http-json-body-parser": "^7.1.4",
+    "@middy/input-output-logger": "^7.1.4",
     "aws-jwt-verify": "^5.1.0",
     "jsonwebtoken": "^9.0.2"
   }
