@@ -60,7 +60,7 @@
     "*.{js,md,ts}": "prettier --write --ignore-path .gitignore"
   },
   "dependencies": {
-    "@dazn/lambda-powertools-logger": "^1.28.1",
+    "@aws-lambda-powertools/logger": "^2.31.0",
     "@middy/core": "^7.1.4",
     "@middy/http-json-body-parser": "^7.1.4",
     "aws-jwt-verify": "^5.1.0",

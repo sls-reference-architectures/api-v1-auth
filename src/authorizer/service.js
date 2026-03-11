@@ -1,9 +1,11 @@
-import Logger from '@dazn/lambda-powertools-logger';
+import { Logger } from '@aws-lambda-powertools/logger';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import jwt from 'jsonwebtoken';
 
+const logger = new Logger({ serviceName: 'V1Auth' });
+
 const getPolicy = async ({ methodArn, authHeaderValue }) => {
-  Logger.debug('In service.authorize()', { methodArn, authHeaderValue }); // TODO: stop logging input --SRO
+  logger.debug('In service.authorize()', { methodArn, authHeaderValue }); // TODO: stop logging input --SRO
   try {
     const authToken = getTokenFromAuthHeaderValue(authHeaderValue);
     const clientId = getClientId(authToken);
@@ -13,11 +15,11 @@ const getPolicy = async ({ methodArn, authHeaderValue }) => {
       tokenUse: 'access',
     });
     const payload = await verifier.verify(authToken);
-    Logger.debug('Temporary trace: authorized', { payload });
+    logger.debug('Temporary trace: authorized', { payload });
 
     return generatePolicy({ effect: 'Allow', resource: methodArn });
   } catch (err) {
-    Logger.debug('Temporary trace: unauthorized', { errMsg: err.message });
+    logger.debug('Temporary trace: unauthorized', { errMsg: err.message });
 
     throw Error('Unauthorized'); // This becomes 401/Unauthorized in API Gateway
   }

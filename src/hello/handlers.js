@@ -1,18 +1,17 @@
-import Logger from '@dazn/lambda-powertools-logger';
 import middy from '@middy/core';
+import ioLogger from '@middy/input-output-logger';
 import jsonBodyParser from '@middy/http-json-body-parser';
 
-const getMessage = async (event) => {
-  Logger.debug('In getMessage()', { event });
+import ioLoggerConfig from '../common/middyIoLoggerConfiguration';
 
+const getMessage = async (event) => {
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: 'Hello World!' }),
+    body: JSON.stringify({ message: 'Hello World!', event }),
   };
 };
 
 const createMessage = async (event) => {
-  Logger.debug('In createMessage()', { event });
   const {
     body: { name },
   } = event;
@@ -23,5 +22,10 @@ const createMessage = async (event) => {
   };
 };
 
-export const getMessageHandler = middy(getMessage);
-export const createMessageHandler = middy(createMessage).use(jsonBodyParser());
+export const getMessageHandler = middy()
+  .use(ioLogger(ioLoggerConfig('V1Auth')))
+  .handler(getMessage);
+export const createMessageHandler = middy()
+  .use(jsonBodyParser())
+  .use(ioLogger(ioLoggerConfig('V1Auth')))
+  .handler(createMessage);
