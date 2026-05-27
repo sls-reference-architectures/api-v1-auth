@@ -15,13 +15,11 @@ describe('When getting a hello', () => {
         validateStatus: () => true,
       };
 
+      // ACT + ASSERT
       await retry(
         async () => {
-          // ACT
           const { status, data } = await axios.get(path, options);
-
-          // ASSERT
-          expect(status).toEqual(200);
+          if (status !== 200) throw new Error(`Expected 200, got ${status}`);
           expect(data.message).toMatch(/hello world/i);
         },
         { retries: 7 },
@@ -41,11 +39,14 @@ describe('When getting a hello', () => {
         validateStatus: () => true,
       };
 
-      // ACT
-      const { status } = await axios.get(path, options);
-
-      // ASSERT
-      expect(status).toEqual(401);
+      // ACT + ASSERT
+      await retry(
+        async () => {
+          const { status } = await axios.get(path, options);
+          if (status !== 401) throw new Error(`Expected 401, got ${status}`);
+        },
+        { retries: 3 },
+      );
     });
   });
 
@@ -61,11 +62,14 @@ describe('When getting a hello', () => {
         validateStatus: () => true,
       };
 
-      // ACT
-      const { status } = await axios.get(path, options);
-
-      // ASSERT
-      expect(status).toEqual(403);
+      // ACT + ASSERT
+      await retry(
+        async () => {
+          const { status } = await axios.get(path, options);
+          if (status !== 403) throw new Error(`Expected 403, got ${status}`);
+        },
+        { retries: 3 },
+      );
     });
   });
 });

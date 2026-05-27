@@ -58,13 +58,23 @@ const getTestClientSecret = async (stack) => {
 
 export const getStack = async (stackName) => {
   const cfn = new CloudFormationClient({ region });
-  const stackResult = await cfn.send(new DescribeStacksCommand({ StackName: stackName }));
-  const stack = stackResult.Stacks?.[0];
-  if (!stack) {
-    throw new Error(`Couldn't find stack with name ${stackName}`);
-  }
-
-  return stack;
+  return retry(
+    async (bail) => {
+      try {
+        const stackResult = await cfn.send(new DescribeStacksCommand({ StackName: stackName }));
+        const stack = stackResult.Stacks[0];
+        if (!stack) throw new Error(`No stack found with name ${stackName}`);
+        return stack;
+      } catch (err) {
+        if (err.name === 'ValidationError') {
+          bail(err);
+          return;
+        }
+        throw err;
+      }
+    },
+    { retries: 3 },
+  );
 };
 
 export const getTestToken = async (stack) => {

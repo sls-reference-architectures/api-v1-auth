@@ -10,9 +10,8 @@ describe('When invoking service.getPolicy', () => {
       // ACT
       const {
         Version,
-        Statement: [statement],
+        Statement: [policyStatement],
       } = await getPolicy(input);
-      const policyStatement = statement;
 
       // ASSERT
       expect(Version).toBeString();
