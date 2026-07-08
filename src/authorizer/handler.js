@@ -14,6 +14,6 @@ const authorize = async (event) => {
   };
 };
 
-export default middy()
+export const handler = middy()
   .use(ioLogger(ioLoggerConfig('V1Auth')))
   .handler(authorize);

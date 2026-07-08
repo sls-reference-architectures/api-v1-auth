@@ -40,7 +40,7 @@ functions:
           private: true
           authorizer: authorizerFunc
   authorizerFunc:
-    handler: src/authorizer/handler.default
+    handler: src/authorizer/handler.handler
     environment:
       USER_POOL_ID: !Ref ApiV1AuthUserPool
 
