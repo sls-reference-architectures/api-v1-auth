@@ -23,20 +23,12 @@ provider:
   tags:
     lumigo:auto-trace: true
 
-custom:
-  logRetentionInDays: 7
-  prune:
-    automatic: true
-    number: 1
-
 package:
   individually: true
 
 plugins:
   - serverless-esbuild
   - serverless-iam-roles-per-function
-  - serverless-plugin-log-retention
-  - serverless-prune-plugin
 
 functions:
   helloWorld:
