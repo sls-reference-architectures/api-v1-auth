@@ -34,7 +34,6 @@ package:
 
 plugins:
   - serverless-esbuild
-  - serverless-deployment-bucket
   - serverless-iam-roles-per-function
   - serverless-plugin-log-retention
   - serverless-prune-plugin
