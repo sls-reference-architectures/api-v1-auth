@@ -92,6 +92,27 @@ export const getTestToken = async (stack) => {
   return token;
 };
 
+// Newly created/rotated API Gateway keys have a short propagation delay before
+// they're recognized by the request-time validation layer. Waiting here, with a
+// patient retry schedule, keeps that delay out of the actual test assertions.
+export const waitForApiKeyToBeActive = async ({ serviceUrl, accessToken, apiKey }) => {
+  await retry(
+    async () => {
+      const { status } = await axios.get(`${serviceUrl}/hello`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'x-api-key': apiKey ?? '',
+        },
+        validateStatus: () => true,
+      });
+      if (status !== 200) {
+        throw new Error(`API key not yet active, got ${status}`);
+      }
+    },
+    { retries: 10, minTimeout: 3000, factor: 1.3 },
+  );
+};
+
 const getToken = async ({ clientId, clientSecret, userPoolDomain }) => {
   const body = { grant_type: 'client_credentials' };
   const options = {

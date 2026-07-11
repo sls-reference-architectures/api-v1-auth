@@ -4,6 +4,7 @@ import {
   getUserPoolId,
   getTestToken,
   getApiKey,
+  waitForApiKeyToBeActive,
 } from './setupUtils';
 
 const region = process.env.AWS_REGION || 'us-east-1';
@@ -24,6 +25,12 @@ const setup = async () => {
   process.env.USER_POOL_ID = userPoolId;
   process.env.ACCESS_TOKEN = fullAccessToken;
   process.env.API_KEY = testApiKey?.value;
+
+  await waitForApiKeyToBeActive({
+    serviceUrl,
+    accessToken: fullAccessToken,
+    apiKey: testApiKey?.value,
+  });
 };
 
 export default setup;
