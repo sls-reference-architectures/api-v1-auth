@@ -20,7 +20,7 @@
     "url": "git+https://github.com/sls-reference-architectures/api-v1-auth.git"
   },
   "author": "Seth Orell",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sls-reference-architectures/api-v1-auth/issues"
   },
