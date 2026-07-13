@@ -56,7 +56,7 @@
     "*.{js,md,ts}": "prettier --write --ignore-path .gitignore"
   },
   "dependencies": {
-    "@aws-lambda-powertools/logger": "^2.31.0",
+    "@aws-lambda-powertools/logger": "^2.34.0",
     "@middy/core": "^7.1.7",
     "@middy/http-json-body-parser": "^7.1.7",
     "@middy/input-output-logger": "^7.1.7",
