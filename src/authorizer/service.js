@@ -21,7 +21,7 @@ const getPolicy = async ({ methodArn, authHeaderValue }) => {
   } catch (err) {
     logger.debug('Temporary trace: unauthorized', { errMsg: err.message });
 
-    throw Error('Unauthorized'); // This becomes 401/Unauthorized in API Gateway
+    throw new Error('Unauthorized', { cause: err }); // This becomes 401/Unauthorized in API Gateway
   }
 };
 
