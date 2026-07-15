@@ -1,6 +1,7 @@
 service: api-v1-auth
 
 provider:
+  architecture: arm64
   apiGateway:
     apiKeys:
       - IntegrationTestClient
