@@ -2,7 +2,7 @@ import middy from '@middy/core';
 import ioLogger from '@middy/input-output-logger';
 
 import ioLoggerConfig from '../common/middyIoLoggerConfiguration';
-import getPolicy from './service';
+import getPolicy from '../authorizerService';
 
 const authorize = async (event) => {
   const { methodArn, authorizationToken: authHeaderValue } = event;

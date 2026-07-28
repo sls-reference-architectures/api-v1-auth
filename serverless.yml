@@ -31,7 +31,7 @@ plugins:
 
 functions:
   helloWorld:
-    handler: src/hello/handlers.getMessageHandler
+    handler: src/handlers/hello.getMessageHandler
     events:
       - http:
           path: hello
@@ -39,7 +39,7 @@ functions:
           private: true
           authorizer: authorizerFunc
   authorizerFunc:
-    handler: src/authorizer/handler.handler
+    handler: src/handlers/authorizer.handler
     environment:
       USER_POOL_ID: !Ref ApiV1AuthUserPool
 

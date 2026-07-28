@@ -1,4 +1,4 @@
-import getPolicy from '../service';
+import getPolicy from '../src/authorizerService';
 
 describe('When invoking service.getPolicy', () => {
   describe('with a valid bearer token', () => {
