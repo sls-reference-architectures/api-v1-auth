@@ -46,7 +46,7 @@
     "lint-staged": "^17.0.8",
     "osls": "^4.1.0",
     "prettier": "^3.9.6",
-    "qs": "^6.15.2",
+    "qs": "^6.15.3",
     "serverless-esbuild": "^1.57.2",
     "serverless-iam-roles-per-function": "^3.2.0"
   },
